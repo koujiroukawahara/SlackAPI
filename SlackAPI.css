@@ -1,3 +1,4 @@
+
 body
 {
   overflow-x: hidden;
@@ -7,78 +8,84 @@ body
 {
   position: fixed; 
   width:  100%;
-  height: 110%;
+  height: 100%;
   top : 0%;
   left : 0%;
   background: rgb(160, 208, 247);
 }
 
-.pageElement
+.boxContainer
 {
-  display: -webkit-inline-flex;
-  display: inline-flex;
-
-  -webkit-flex-direction: row;
-   flex-direction: row;
-
- 
+  width:  auto;
+  overflow: scroll;
+  height: 85%;     /* 高さを制限(※) */
 }
 
-.messagesContainer 
+.Container
 {
- 
-max-height: auto;
-
+  width:  100%;
   position: relative;
-  
+  top : 0;
+  right : 0;
+  margin: 50px 0px 50px 0px;
 }
 
+
+.messageContainer
+{ 
+  display: flex;
+  flex-direction: row;
+
+  width:  100%;
+  left : 0;
+  position: relative;
+}
+
+.profileIconContainer
+{
+  width : 47px;
+  height : 47px;
+
+  border-radius: 50px;
+  position: absolute;
+  top : 0px;
+  left : 0px;
+}
+
+.nameContainer
+{
+  position: relative;
+  left: 60px;
+}
+
+.messageandTimeContainer
+{
+  position: relative;
+  top: 25px;
+  left: 5px;
+}
 
 .nameText
 {
   font-size : 18px;
-  width : 250px;
-
-  
-  position: relative;
+  position: absolute;
+  left: 10px;
+  top: -5px;
 }
 
-.profileIcon
+.messageText
 {
- 
-  width : 47px;
-  height : 47px;
+  max-width: 85%;
 
-  
-  border-radius: 50px;
+  display: inline-block;
 
-  }
-
-.time 
-{
-  width:  85px;
-
-
-  
-  font-size : 13px;
   position: relative;
- 
-}
-
-.message 
-{
-  max-width:  70%;
-
-
-  position: relative; 
- 
-  margin: 0px 0px 0px 0px;
   padding: 8px 15px;
   border-radius: 12px;
   background: white; 
 }
 
-.message:after 
+.messageText:after 
 {
   content: "";
   display: inline-block;
@@ -90,58 +97,110 @@ max-height: auto;
   transform: rotate(20deg);
 }
 
-.myProfileIcon
+.timeText
 {
-   
-  width : 47px;
-  height : 47px;
   display: inline-block;
 
+  font-size : 13px;
   position: relative;
+  left: 10px;
+  top: 10px;
+}
 
-  top : 0px;
-  right : 0px;
+
+
+
+
+
+
+.myMessageContainer
+{ 
+  display: flex;
+   flex-direction: row-reverse;
+
+  width:  100%;
+  right : 0;
+  position: relative;
+}
+
+.myProfileIconContainer
+{
+  width : 47px;
+  height : 47px;
+
   border-radius: 50px;
+  position: relative;
+  margin: 0px 0px 0px 20px;
+}
+
+.myNameContainer
+{
+  display: flex;
+  flex-direction: row-reverse;
+   
+  position: relative;
+}
+
+.myMessageandTimeContainer
+{
+  display:flex;
+  flex-direction: column-reverse;
+
+  position: relative;
+  top: 25px;
+  left: 5px;
 }
 
 .myNameText
 {
-  font-size : 15px;
-  width : 250px;
-
-  display: inline-block;
-
+  font-size : 18px;
   position: absolute;
-  top: -4px; 
-  right: -4.2%;
+  right: 10px;
+  top: -5px;
 }
 
-.myTime
+.myMessageText
 {
-  width:  85px;
-
-  display: inline-block;
-  
-  font-size: 13px;
-
-}
-
-.myMessage 
-{
-  max-width:  70%;
-
-
-  position: relative; 
-  top : 0px;
-  right : 0%;
-  margin: 20px 7px 20px 0px;
+  position: relative;
   padding: 8px 15px;
   border-radius: 12px;
   background: lime; 
 }
 
-.myMessage:after 
+.myMessageText:after 
 {
- 
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: -7px;
+  right: -4px;
+  border: 17px solid transparent;
+  border-right: 14px solid lime;
+  transform: rotate(35deg);
 }
 
+.myTimeText
+{
+
+  font-size : 13px;
+  position: relative;
+  left: -140px;
+  bottom: 20px;
+}
+
+.textEditor
+{
+  width : 100%;
+  height: 15%;
+  position: relative;
+  top : 0%;
+}
+
+.point
+{
+  display: inline-block;
+  font-size: 25px;
+  position: absolute;
+  bottom : -10px;
+  right : 0px;
+}

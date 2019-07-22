@@ -1,5 +1,6 @@
 var userListResponse;
 window.onload = () => {
+
 	const userListRequest = new XMLHttpRequest();
 	
 	userListRequest.open("GET", createUserListUrl(), true);
@@ -12,6 +13,21 @@ window.onload = () => {
 	}
 };
 
+
+const sendMessage = () =>
+{
+	let textarea = document.getElementById("textbox");
+	let xhr = new XMLHttpRequest();
+	const token = "トークン";
+	const channelID = "CB74M5Y6B";
+
+	let url = `https://slack.com/api/chat.postMessage?token=${token}&channel=${channelID}&text=${textarea.value}`
+
+    xhr.open("GET",url,true);
+	xhr.send(null);   
+	
+	textarea.value = "";
+}
 
 const messagesRequest = new XMLHttpRequest();
 const getMessages = (latest = 0) => 
@@ -41,17 +57,10 @@ const getMessages = (latest = 0) =>
 	}
 };
 
-const getUserList = () => 
-{
-	
-
-}
-
-
 
 const createHistoryUrl = latest => {
 
-	const token = "";
+	const token = "トークン";
 
 	const channelID = "CB74M5Y6B";
 
@@ -71,7 +80,7 @@ const createHistoryUrl = latest => {
 
 const createUserListUrl = latest => {
 
-	const token = "";
+	const token = "トークン";
 
 	const limit = "150";
 
@@ -81,102 +90,97 @@ const createUserListUrl = latest => {
 };
 
 
-
-const messageElement = document.createElement("div");
-const timeElement = document.createElement("div");
-
 const displayMessages = (messageResponse,userListResponse) => 
 {
-	const pageElement = document.createElement("div");
-	pageElement.className = "pageElement";
-	
 	const userListCount = userListResponse.members.length;
 	const messageCount = messageResponse.messages.length;
-
-	
-	for (let i = messageCount - 1; i >= 0; i--)
+	const boxContainer = document.querySelector(".boxContainer");
+	for (let i = 0; i <= messageCount - 1; i++)
 	{
-		// プロフィールアイコン
-		const profileIconElement = document.createElement("div");
-		// 名前
-		const nameTextElement = document.createElement("div");
+		const Container = document.createElement("div");//div1の役目
+		const messageContainer = document.createElement("div");//div2の役目
+		const profileIconContainer = document.createElement("div");//div3の役目
+		const nameContainer = document.createElement("div");//div4の役目
+		const messageandTimeContainer = document.createElement("div");//div5の役目
+		const nameText = document.createElement("div");//div6の役目
+		const messageText = document.createElement("div");//div7の役目
+		const timeText = document.createElement("div");//div8の役目
+
+
+
 		for(let j = 0;j < userListCount;j++)
 		{
 			if(messageResponse.messages[i].user == userListResponse.members[j].id)
 			{
-				profileIconElement.style.backgroundImage =   `url(${userListResponse.members[j].profile.image_48})`;
-
-				if(userListResponse.members[j].profile.real_name ==  "川原　光二郎")
-				{
-				nameTextElement.className = "myNameText";
-				}
-				else
-				{
-				nameTextElement.className = "nameText";
-				}
-				nameTextElement.innerText = userListResponse.members[j].profile.real_name;
+				profileIconContainer.style.backgroundImage =  `url(${userListResponse.members[j].profile.image_48})`;
+				
+				nameText.innerText = userListResponse.members[j].profile.real_name;
 			}
 		}
-		//メッセージ
-		const messageElement = document.createElement("div");
-		//時間
-		const timeElement = document.createElement("div");
 
 
-		if(nameTextElement.innerText == "川原　光二郎")
+
+		Container.classList.add("Container");
+		if(nameText.innerText == "川原　光二郎")
 		{
-		//名前の設定
-
-		//アイコンの設定
-		profileIconElement.className = "myProfileIcon";
-		//メッセージの設定
-		messageElement.className = "myMessage";
-		//時間の設定
-		timeElement.className = "time";	
+			messageContainer.classList.add("myMessageContainer");
+			profileIconContainer.classList.add("myProfileIconContainer");
+			nameContainer.classList.add("myNameContainer");
+			messageandTimeContainer.classList.add("myMessageandTimeContainer");
+			nameText.classList.add("myNameText");
+			messageText.classList.add("myMessageText");
+			timeText.classList.add("myTimeText");
 		}
 		else
 		{
-		//名前の設定
-		
-		//アイコンの設定
-		profileIconElement.className = "profileIcon";
-		//メッセージの設定
-		messageElement.className = "message";
-		//時間の設定
-		timeElement.className = "time";	
+			messageContainer.classList.add("messageContainer");
+			profileIconContainer.classList.add("profileIconContainer");
+			nameContainer.classList.add("nameContainer");
+			messageandTimeContainer.classList.add("messageandTimeContainer");
+			nameText.classList.add("nameText");
+			messageText.classList.add("messageText");
+			timeText.classList.add("timeText");
 		}
 
 
+	//メッセージ本文挿入
+	messageText.innerText = messageResponse.messages[i].text;
+	//投稿時間の変換と挿入
+	var month = new Date(messageResponse.messages[i].ts * 1000).getMonth() + 1;
+	var day = new Date(messageResponse.messages[i].ts * 1000).getDate();
+	var hour  = new Date(messageResponse.messages[i].ts * 1000).getHours();
+	var minute  = new Date(messageResponse.messages[i].ts * 1000).getMinutes();
+	var dayOfWeek  = new Date(messageResponse.messages[i].ts * 1000).getDay();
+	var dayOfWeekStr  = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek];
+	timeText.innerText = `${month}月${day}日(${dayOfWeekStr})  　${hour}:${minute}`
 
-		//メッセージ本文挿入
-		messageElement.innerText = messageResponse.messages[i].text;
-		//投稿時間の変換と挿入
-		var month = new Date(messageResponse.messages[i].ts * 1000).getMonth() + 1;
-		var day = new Date(messageResponse.messages[i].ts * 1000).getDate();
-		var hour  = new Date(messageResponse.messages[i].ts * 1000).getHours();
-		var minute  = new Date(messageResponse.messages[i].ts * 1000).getMinutes();
-		var dayOfWeek  = new Date(messageResponse.messages[i].ts * 1000).getDay();
-		var dayOfWeekStr  = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek];
-
-		timeElement.innerText = `${month}月${day}日(${dayOfWeekStr})  　${hour}:${minute}`
-
-
-		pageElement.appendChild(profileIconElement);
-		pageElement.appendChild(messageElement);
-		pageElement.appendChild(timeElement);
-		pageElement.appendChild(nameTextElement);
-		
+	if(nameText.innerText == "川原　光二郎")
+	{
+		messageandTimeContainer.appendChild(timeText);
+		messageandTimeContainer.appendChild(messageText);
+	}
+	else{
+	messageandTimeContainer.appendChild(messageText);
+	messageandTimeContainer.appendChild(timeText);
 	}
 
-	const messagesContainer = document.querySelector(".messagesContainer");
-	//messagesContainerにノードが追加されてなければpageElementを追加する
-	//追加されていたら先頭に追加する
-	if (messagesContainer.childElementCount === 0) 
+	nameContainer.appendChild(nameText);
+	nameContainer.appendChild(messageandTimeContainer);
+
+	messageContainer.appendChild(profileIconContainer);
+	messageContainer.appendChild(nameContainer);
+	
+	Container.appendChild(messageContainer);
+	Container.insertBefore(messageContainer, Container.children[0]);
+
+	const box = document.querySelector(".boxContainer");
+	if (box.childElementCount === 0) 
 	{
-		messagesContainer.appendChild(pageElement);
+		box.appendChild(Container);
 	}
 	else 
 	{
-		messagesContainer.insertBefore(pageElement, messagesContainer.children[0]);
+		box.insertBefore(Container, box.children[0]);
+	}
 	}
 };

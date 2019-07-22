@@ -1,0 +1,17 @@
+.BackGround 
+{
+    z-index: -1;
+  position: fixed; 
+  width:  100%;
+  height: 100%;
+  top : 0%;
+  left : 0%;
+  background: rgb(160, 208, 247);
+}
+
+.text
+{
+    width:  100%;
+    height: 100%;
+    font-size: 35;
+}
